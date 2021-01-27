@@ -189,18 +189,23 @@ Set the following startup script
 apt update -y
 apt install cmake build-essential -y
 apt install checkinstall git -y
-apt install wget python3 python3-pip python3-dev -y
+apt install wget python3 python3-pip python3-dev ruby -y
 git clone https://github.com/hashcat/hashcat.git && cd hashcat && make -j 8 && make install && cd && /root/
-git clone https://github.com/Flangvik/hate_crack
 git clone https://github.com/danielmiessler/SecLists.git
-chmod +x /hate_crack/PACK/*.py
-chmod +x /hate_crack/*.py
-
+git clone https://github.com/digininja/pipal
+wget https://github.com/brannondorsey/naive-hashcat/releases/download/data/rockyou.txt -O SecLists/Passwords/rockyou.txt
 mkdir optimized_wordlists
-mkdir rules
-wget https://github.com/NotSoSecure/password_cracking_rules/raw/master/OneRuleToRuleThemAll.rule -O rules/OneRuleToRuleThemAll.rule
+mkdir hashcat/rules
+wget https://github.com/NotSoSecure/password_cracking_rules/raw/master/OneRuleToRuleThemAll.rule -O hashcat/rules/OneRuleToRuleThemAll.rule
 
 pip3 install openpyxl
+
+git clone https://github.com/Flangvik/hate_crack
+chmod +x hate_crack/PACK/*.py
+chmod +x hate_crack/*.py
+python3 hate_crack/wordlist_optimizer.py /root/SecLists/Passwords/ /root/optimized_wordlists
+
+
 ```
 ### Version History
 Version 1.08
