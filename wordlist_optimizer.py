@@ -5,6 +5,8 @@ import os
 import subprocess
 import shutil
 import pathlib
+from os.path import isfile, join
+from os import listdir
 
 # Help
 def usage():
@@ -12,7 +14,7 @@ def usage():
 
 def lineCount(file):
   try:
-    outFile = open(file)
+    outFile = open(file,encoding='ISO-8859-1')
   except:
     return 0
 
@@ -24,8 +26,8 @@ def lineCount(file):
 # Main guts
 def main():
   try:
-    if not os.path.isfile(sys.argv[1]):
-      print('{0} is not a valid file.\n'.format(sys.argv[1]))
+    if not os.path.isdir(sys.argv[1]):
+      print('{0} is not a valid/existing directory.\n'.format(sys.argv[1]))
       sys.exit()
     if not os.path.isdir(sys.argv[2]):
       create_directory = input('{0} is not a directory. Do you want to create it? (Y or N)'.format(sys.argv[2]))
@@ -37,8 +39,12 @@ def main():
           sys.exit()
       else:
         print('Please specify a valid directory and try again')
-        sys.exit()
-    input_list = open(sys.argv[1], "r")
+        sys.exit()  
+    input_list = []
+    for root, dirs, files in os.walk(sys.argv[1]):
+       for file in files:
+          p=os.path.join(root,file)
+          input_list.append(os.path.abspath(p))
     destination = sys.argv[2]
   except IndexError:
     usage()
@@ -70,8 +76,8 @@ def main():
         else:
           rliProcess = subprocess.Popen("%s /tmp/splitlen/%s /tmp/splitlen.out %s/%s" % (rli_bin, file, destination, file), shell=True).wait()
           if lineCount("/tmp/splitlen.out") > 0:
-            destination_file = open(destination + "/" + file, "a")
-            splitlen_file = open("/tmp/splitlen.out", "r")
+            destination_file = open(destination + "/" + file, "a",encoding='ISO-8859-1')
+            splitlen_file = open("/tmp/splitlen.out", "r",encoding='ISO-8859-1')
             destination_file.write(splitlen_file.read())
             destination_file.close()
             splitlen_file.close()

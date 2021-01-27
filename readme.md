@@ -179,6 +179,29 @@ https://jeffh.net/2018/04/26/combinator_methods/
   - Hybrid middle/end attack: rockyou.txt + ?s + rockyou.txt + ?s
 
 -------------------------------------------------------------------
+### vast.ai setup!
+
+Use OS image nvidia/opencl
+Use "Run interactive shell server, SSH"
+Set the following startup script
+
+```
+apt update -y
+apt install cmake build-essential -y
+apt install checkinstall git -y
+apt install wget python3 python3-pip python3-dev -y
+git clone https://github.com/hashcat/hashcat.git && cd hashcat && make -j 8 && make install && cd && /root/
+git clone https://github.com/Flangvik/hate_crack
+git clone https://github.com/danielmiessler/SecLists.git
+chmod +x /hate_crack/PACK/*.py
+chmod +x /hate_crack/*.py
+
+mkdir optimized_wordlists
+mkdir rules
+wget https://github.com/NotSoSecure/password_cracking_rules/raw/master/OneRuleToRuleThemAll.rule -O rules/OneRuleToRuleThemAll.rule
+
+pip3 install openpyxl
+```
 ### Version History
 Version 1.08
   Added a Pipal menu Option to analyze hashes. https://github.com/digininja/pipal
