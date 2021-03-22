@@ -189,6 +189,7 @@ Set the following startup script
 apt update -y
 apt install cmake build-essential -y
 apt install checkinstall git -y
+apt install p7zip-full -y
 apt install wget python3 python3-pip python3-dev ruby -y
 git clone https://github.com/hashcat/hashcat.git && cd hashcat && make -j 8 && make install && cd && /root/
 git clone https://github.com/danielmiessler/SecLists.git
@@ -203,6 +204,8 @@ pip3 install openpyxl
 git clone https://github.com/Flangvik/hate_crack
 chmod +x hate_crack/PACK/*.py
 chmod +x hate_crack/*.py
+7z x hashcat-utils-1.9.7z
+mv hashcat-utils-1.9/ hashcat-utils/
 python3 hate_crack/wordlist_optimizer.py /root/SecLists/Passwords/ /root/optimized_wordlists
 
 
